@@ -1,0 +1,24 @@
+# This is the user interface for the shiny app to determine stoping distance of speeding cars.
+
+# Define UI for application that draws a plot and predict stopping distance
+shinyUI(fluidPage(
+  
+  # Application title
+  titlePanel("Predicting stopping distance of car based upon its speed"),
+  
+  # Sidebar with a slider input for speed 
+  sidebarLayout(
+    sidebarPanel(
+      h4("choose the speed of the car"),
+      sliderInput("speed",label="speed of the car",min = min(cars$speed),max = 25,5,1)
+    ),
+    
+    # Show a plot
+    mainPanel(
+      h4("Plot - speed vs distance of cars dataset"),
+      plotOutput("Plot1"),
+      h4("Stopping distance in feet"),
+      verbatimTextOutput("Pred1")
+    )
+  )
+))
