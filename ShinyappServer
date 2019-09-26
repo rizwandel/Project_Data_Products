@@ -1,0 +1,26 @@
+# This is the server logic of a Shiny web application. 
+library(shiny)
+library(datasets)
+
+
+# Define server logic required to draw a histogram
+shinyServer(function(input, output) {
+  fit <- lm(dist~speed, cars)
+  
+  Pred1 <- reactive({
+    speed <- input$speed
+    predict(fit, newdata=data.frame(speed=input$speed))
+  })
+  
+  output$Plot1 <- renderPlot({
+    speed <- input$speed
+    plot(cars$speed,cars$dist, xlab="speed in miles per hour",ylab="distance in feet",bty="n", pch=20)
+    abline(fit,col="red",lwd=1)
+    points(speed,Pred1(), col='blue',pch= 16,cex=3)
+  })
+  
+  output$Pred1 <- renderText({
+    Pred1()
+  })
+  
+})
